@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predicciones Champions con Penalizaciones</title>
+    <title>Predicciones Champions - 7 Jugadores</title>
     <style>
         * {
             box-sizing: border-box;
@@ -20,7 +20,7 @@
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1800px;
             margin: 0 auto;
         }
         
@@ -44,13 +44,41 @@
             opacity: 0.9;
         }
         
+        .player-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .player-btn {
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        
+        .player-btn.active {
+            background-color: #2a5298;
+            transform: scale(1.05);
+        }
+        
+        .player-btn:hover {
+            background-color: #495057;
+        }
+        
         .content {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 3fr 1fr;
             gap: 30px;
         }
         
-        @media (max-width: 1100px) {
+        @media (max-width: 1200px) {
             .content {
                 grid-template-columns: 1fr;
             }
@@ -61,12 +89,6 @@
             border-radius: 10px;
             padding: 25px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
         }
         
         .card h2 {
@@ -80,10 +102,11 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
+            font-size: 0.9em;
         }
         
         th, td {
-            padding: 12px 10px;
+            padding: 8px 6px;
             text-align: center;
             border-bottom: 1px solid #eaeaea;
         }
@@ -103,14 +126,15 @@
             color: white;
             font-weight: bold;
             text-align: center;
-            padding: 8px;
-            margin-top: 20px;
+            padding: 6px;
+            margin-top: 15px;
             border-radius: 5px;
         }
         
         .team-name {
             text-align: left;
             font-weight: 500;
+            min-width: 180px;
         }
         
         .odds {
@@ -127,7 +151,8 @@
             color: #856404;
             font-weight: bold;
             border-radius: 4px;
-            padding: 2px 6px;
+            padding: 2px 4px;
+            font-size: 0.8em;
         }
         
         .instructions {
@@ -158,15 +183,16 @@
         }
         
         input {
-            width: 50px;
-            padding: 5px;
+            width: 40px;
+            padding: 4px;
             text-align: center;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 0.9em;
         }
         
         .result-cell {
-            min-width: 80px;
+            min-width: 60px;
         }
         
         .acierto-exacto {
@@ -189,24 +215,28 @@
         
         .puntos {
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1em;
         }
         
         .controls {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         button {
             background-color: #2a5298;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: background-color 0.3s;
+            flex: 1;
+            min-width: 120px;
         }
         
         button:hover {
@@ -219,8 +249,100 @@
             padding: 15px;
             background-color: #e8f4fd;
             border-radius: 5px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
+        }
+        
+        .data-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            resize: vertical;
+            font-size: 0.9em;
+        }
+        
+        .import-export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .export-btn {
+            background-color: #28a745;
+        }
+        
+        .export-btn:hover {
+            background-color: #218838;
+        }
+        
+        .import-btn {
+            background-color: #17a2b8;
+        }
+        
+        .import-btn:hover {
+            background-color: #138496;
+        }
+        
+        .ranking-table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .ranking-table th {
+            background-color: #2a5298;
+            color: white;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 4px solid #2a5298;
+        }
+        
+        .summary-card h4 {
+            margin: 0 0 10px 0;
+            color: #2a5298;
+            font-size: 1.1em;
+        }
+        
+        .summary-points {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        .real-results-section {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .real-results-section h3 {
+            margin-top: 0;
+            color: #856404;
         }
     </style>
 </head>
@@ -228,20 +350,52 @@
     <div class="container">
         <header>
             <h1>Predicciones Champions League</h1>
-            <p class="subtitle">Jornada 2 - Sistema completo con penalizaciones</p>
+            <p class="subtitle">Jornada 2 - Sistema para 7 Jugadores</p>
         </header>
         
         <div class="instructions">
             <h3>Instrucciones</h3>
-            <p>1. Introduce tu predicción en formato "golesLocal-golesVisitante" (ej: 2-1)</p>
-            <p>2. Cuando se conozca el resultado, introdúcelo en la columna "Resultado Real"</p>
-            <p>3. Haz clic en "Calcular Puntos" para ver tus aciertos y puntuación</p>
-            <p>4. <span class="highlight">Acierto Exacto</span>: 12 puntos | <span class="highlight">Acierto 1X2</span>: 8 puntos | <span class="highlight">Fallo</span>: Penalización o 0 puntos</p>
+            <p>1. <strong>Selecciona un jugador</strong> para ver/editar sus predicciones</p>
+            <p>2. Introduce predicciones en formato "golesLocal-golesVisitante" (ej: 2-1)</p>
+            <p>3. <strong>Una vez se conozcan los resultados</strong>, introdúcelos en la sección "Resultados Reales" (sólo una vez para todos)</p>
+            <p>4. Los puntos se calculan automáticamente para todos los jugadores</p>
+            <p>5. <span class="highlight">Acierto Exacto</span>: 12 puntos | <span class="highlight">Acierto 1X2</span>: 8 puntos | <span class="highlight">Fallo</span>: Penalización o 0 puntos</p>
+        </div>
+
+        <!-- Selector de Jugadores -->
+        <div class="player-selector" id="player-selector">
+            <!-- Los botones de jugadores se generarán aquí -->
+        </div>
+
+        <!-- Resumen de Puntos -->
+        <div class="card">
+            <h2>Resumen de Puntos - Todos los Jugadores</h2>
+            <div class="summary-grid" id="summary-grid">
+                <!-- El resumen se generará aquí -->
+            </div>
         </div>
         
         <div class="content">
             <div class="card">
-                <h2>Partidos de la Champions League</h2>
+                <h2 id="current-player-title">Predicciones de <span id="current-player">Adrián</span></h2>
+                
+                <!-- Sección para resultados reales -->
+                <div class="real-results-section">
+                    <h3>📝 Resultados Reales (Compartidos para todos)</h3>
+                    <p><small>Introduce aquí los resultados una sola vez. Se aplicarán automáticamente a todos los jugadores.</small></p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Hora</th>
+                                <th>Partido</th>
+                                <th>Resultado Real</th>
+                            </tr>
+                        </thead>
+                        <tbody id="real-results-table">
+                            <!-- Los inputs para resultados reales se generarán aquí -->
+                        </tbody>
+                    </table>
+                </div>
                 
                 <div class="match-date">30 Septiembre 2025 - Fase de Liga</div>
                 <table id="matches-table">
@@ -251,7 +405,6 @@
                             <th>Partido</th>
                             <th>Cuotas</th>
                             <th>Mi Predicción</th>
-                            <th>Resultado Real</th>
                             <th>Acierto</th>
                             <th>Puntos</th>
                         </tr>
@@ -262,13 +415,42 @@
                 </table>
                 
                 <div class="controls">
-                    <button id="calculate-btn">Calcular Puntos</button>
-                    <button id="clear-btn">Limpiar Datos</button>
-                    <button id="save-btn">Guardar Predicciones</button>
+                    <button id="calculate-btn">Recalcular Todos</button>
+                    <button id="clear-btn">Limpiar Jugador Actual</button>
+                    <button id="export-btn" class="export-btn">Exportar Todos</button>
                 </div>
                 
                 <div class="total-points" id="total-points">
-                    Puntuación Total: <span id="points-value">0</span> puntos
+                    Puntuación de <span id="player-points-name">Adrián</span>: <span id="points-value">0</span> puntos
+                </div>
+
+                <!-- Ranking de Jugadores -->
+                <h3 style="margin-top: 30px;">Clasificación Detallada</h3>
+                <table class="ranking-table">
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Jugador</th>
+                            <th>Puntos</th>
+                            <th>Aciertos Exactos</th>
+                            <th>Aciertos 1X2</th>
+                            <th>Fallos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ranking-body">
+                        <!-- El ranking se generará aquí -->
+                    </tbody>
+                </table>
+                
+                <div class="data-section">
+                    <h3>Gestión de Datos</h3>
+                    <p>Para guardar/recuperar todas las predicciones:</p>
+                    <textarea id="data-textarea" placeholder="Los datos exportados aparecerán aquí..."></textarea>
+                    
+                    <div class="import-export-buttons">
+                        <button id="import-btn" class="import-btn">Importar Todos</button>
+                        <button id="copy-data-btn">Copiar Texto</button>
+                    </div>
                 </div>
             </div>
             
@@ -281,59 +463,45 @@
                             <th>Penalización</th>
                             <th>Cotización</th>
                             <th>Penalización</th>
-                            <th>Cotización</th>
-                            <th>Penalización</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Hasta 1.10</td><td class="penalty">-82</td><td>1.40</td><td class="penalty">-16</td><td>1.70</td><td class="penalty">-7</td></tr>
-                        <tr><td>1.11</td><td class="penalty">-74</td><td>1.41</td><td class="penalty">-16</td><td>1.71</td><td class="penalty">-7</td></tr>
-                        <tr><td>1.12</td><td class="penalty">-68</td><td>1.42</td><td class="penalty">-15</td><td>1.72</td><td class="penalty">-7</td></tr>
-                        <tr><td>1.13</td><td class="penalty">-62</td><td>1.43</td><td class="penalty">-15</td><td>1.73</td><td class="penalty">-6</td></tr>
-                        <tr><td>1.14</td><td class="penalty">-57</td><td>1.44</td><td class="penalty">-14</td><td>1.74</td><td class="penalty">-6</td></tr>
-                        <tr><td>1.15</td><td class="penalty">-53</td><td>1.45</td><td class="penalty">-14</td><td>1.75</td><td class="penalty">-6</td></tr>
-                        <tr><td>1.16</td><td class="penalty">-49</td><td>1.46</td><td class="penalty">-13</td><td>1.76</td><td class="penalty">-6</td></tr>
-                        <tr><td>1.17</td><td class="penalty">-46</td><td>1.47</td><td class="penalty">-13</td><td>1.77</td><td class="penalty">-6</td></tr>
-                        <tr><td>1.18</td><td class="penalty">-43</td><td>1.48</td><td class="penalty">-13</td><td>1.78</td><td class="penalty">-6</td></tr>
-                        <tr><td>1.19</td><td class="penalty">-41</td><td>1.49</td><td class="penalty">-12</td><td>1.79</td><td class="penalty">-5</td></tr>
-                        <tr><td>1.20</td><td class="penalty">-38</td><td>1.50</td><td class="penalty">-12</td><td>1.80</td><td class="penalty">-5</td></tr>
-                        <tr><td>1.21</td><td class="penalty">-36</td><td>1.51</td><td class="penalty">-12</td><td>1.81</td><td class="penalty">-5</td></tr>
-                        <tr><td>1.22</td><td class="penalty">-34</td><td>1.52</td><td class="penalty">-11</td><td>1.82</td><td class="penalty">-5</td></tr>
-                        <tr><td>1.23</td><td class="penalty">-33</td><td>1.53</td><td class="penalty">-11</td><td>1.83</td><td class="penalty">-5</td></tr>
-                        <tr><td>1.24</td><td class="penalty">-31</td><td>1.54</td><td class="penalty">-11</td><td>1.84</td><td class="penalty">-5</td></tr>
-                        <tr><td>1.25</td><td class="penalty">-29</td><td>1.55</td><td class="penalty">-10</td><td>1.85</td><td class="penalty">-5</td></tr>
-                        <tr><td>1.26</td><td class="penalty">-28</td><td>1.56</td><td class="penalty">-10</td><td>1.86</td><td class="penalty">-5</td></tr>
-                        <tr><td>1.27</td><td class="penalty">-27</td><td>1.57</td><td class="penalty">-10</td><td>1.87</td><td class="penalty">-4</td></tr>
-                        <tr><td>1.28</td><td class="penalty">-26</td><td>1.58</td><td class="penalty">-9</td><td>1.88</td><td class="penalty">-4</td></tr>
-                        <tr><td>1.29</td><td class="penalty">-25</td><td>1.59</td><td class="penalty">-9</td><td>1.89</td><td class="penalty">-4</td></tr>
-                        <tr><td>1.30</td><td class="penalty">-24</td><td>1.60</td><td class="penalty">-9</td><td>1.90</td><td class="penalty">-4</td></tr>
-                        <tr><td>1.31</td><td class="penalty">-23</td><td>1.61</td><td class="penalty">-9</td><td>1.91</td><td class="penalty">-4</td></tr>
-                        <tr><td>1.32</td><td class="penalty">-22</td><td>1.62</td><td class="penalty">-8</td><td>1.92</td><td class="penalty">-4</td></tr>
-                        <tr><td>1.33</td><td class="penalty">-21</td><td>1.63</td><td class="penalty">-8</td><td>1.93</td><td class="penalty">-4</td></tr>
-                        <tr><td>1.34</td><td class="penalty">-20</td><td>1.64</td><td class="penalty">-8</td><td>1.94</td><td class="penalty">-4</td></tr>
-                        <tr><td>1.35</td><td class="penalty">-19</td><td>1.65</td><td class="penalty">-8</td><td>1.95</td><td class="penalty">-4</td></tr>
-                        <tr><td>1.36</td><td class="penalty">-19</td><td>1.66</td><td class="penalty">-8</td><td>1.96</td><td class="penalty">-3</td></tr>
-                        <tr><td>1.37</td><td class="penalty">-18</td><td>1.67</td><td class="penalty">-7</td><td>1.97</td><td class="penalty">-3</td></tr>
-                        <tr><td>1.38</td><td class="penalty">-17</td><td>1.68</td><td class="penalty">-7</td><td>1.98</td><td class="penalty">-3</td></tr>
-                        <tr><td>1.39</td><td class="penalty">-17</td><td>1.69</td><td class="penalty">-7</td><td>1.99</td><td class="penalty">-3</td></tr>
+                        <tr><td>Hasta 1.10</td><td class="penalty">-82</td><td>1.40-1.41</td><td class="penalty">-16</td></tr>
+                        <tr><td>1.11</td><td class="penalty">-74</td><td>1.42-1.43</td><td class="penalty">-15</td></tr>
+                        <tr><td>1.12</td><td class="penalty">-68</td><td>1.44-1.45</td><td class="penalty">-14</td></tr>
+                        <tr><td>1.13</td><td class="penalty">-62</td><td>1.46-1.48</td><td class="penalty">-13</td></tr>
+                        <tr><td>1.14</td><td class="penalty">-57</td><td>1.49-1.51</td><td class="penalty">-12</td></tr>
+                        <tr><td>1.15</td><td class="penalty">-53</td><td>1.52-1.54</td><td class="penalty">-11</td></tr>
+                        <tr><td>1.16</td><td class="penalty">-49</td><td>1.55-1.57</td><td class="penalty">-10</td></tr>
+                        <tr><td>1.17</td><td class="penalty">-46</td><td>1.58-1.60</td><td class="penalty">-9</td></tr>
+                        <tr><td>1.18</td><td class="penalty">-43</td><td>1.61</td><td class="penalty">-9</td></tr>
+                        <tr><td>1.19</td><td class="penalty">-41</td><td>1.62-1.64</td><td class="penalty">-8</td></tr>
+                        <tr><td>1.20</td><td class="penalty">-38</td><td>1.65-1.66</td><td class="penalty">-8</td></tr>
+                        <tr><td>1.21</td><td class="penalty">-36</td><td>1.67-1.69</td><td class="penalty">-7</td></tr>
+                        <tr><td>1.22</td><td class="penalty">-34</td><td>1.70-1.72</td><td class="penalty">-7</td></tr>
+                        <tr><td>1.23</td><td class="penalty">-33</td><td>1.73-1.75</td><td class="penalty">-6</td></tr>
+                        <tr><td>1.24</td><td class="penalty">-31</td><td>1.76-1.78</td><td class="penalty">-6</td></tr>
+                        <tr><td>1.25</td><td class="penalty">-29</td><td>1.79-1.81</td><td class="penalty">-5</td></tr>
+                        <tr><td>1.26</td><td class="penalty">-28</td><td>1.82-1.86</td><td class="penalty">-5</td></tr>
+                        <tr><td>1.27</td><td class="penalty">-27</td><td>1.87-1.90</td><td class="penalty">-4</td></tr>
+                        <tr><td>1.28</td><td class="penalty">-26</td><td>1.91-1.95</td><td class="penalty">-4</td></tr>
+                        <tr><td>1.29</td><td class="penalty">-25</td><td>1.96-1.99</td><td class="penalty">-3</td></tr>
                     </tbody>
                 </table>
-                
-                <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
-                    <h3>¿Cómo funciona el sistema de penalizaciones?</h3>
-                    <p>Cuando una cuota es inferior a 2.00, se aplica una penalización según la tabla.</p>
-                    <p>Si fallas un partido con cuota baja, se resta la penalización de tu puntuación total.</p>
-                    <p>Si aciertas el 1X2, obtienes 8 puntos. Si aciertas el resultado exacto, obtienes 12 puntos.</p>
-                </div>
             </div>
         </div>
         
         <footer>
-            <p>Sistema de Predicciones Champions League &copy; 2025 - Con penalizaciones por cuotas bajas</p>
+            <p>Sistema de Predicciones Champions League &copy; 2025 - 7 Jugadores</p>
         </footer>
     </div>
 
     <script>
+        // Configuración
+        const playerNames = ["Adrián", "Julen", "Joseba", "Imanol", "Markel", "Barry", "Endika"];
+        const TOTAL_PLAYERS = playerNames.length;
+        let currentPlayer = 1;
+
         // Datos de los partidos
         const matches = [
             // 30 de septiembre
@@ -378,84 +546,115 @@
             "1.94": -4, "1.95": -4, "1.96": -3, "1.97": -3, "1.98": -3, "1.99": -3
         };
 
-        // Función para obtener la penalización de una cuota
+        // Almacenamiento de datos
+        let realResults = Array(matches.length).fill("");
+        let allPlayersData = Array.from({length: TOTAL_PLAYERS}, () => 
+            Array.from({length: matches.length}, () => ({ pred: "" }))
+        );
+
+        // Función para obtener la penalización
         function getPenalty(odd) {
             if (odd >= 2.0) return 0;
-            
-            // Buscar la penalización correspondiente
             const oddKey = Object.keys(penaltyTable).find(key => odd <= parseFloat(key));
             return penaltyTable[oddKey] || 0;
         }
 
-        // Función para determinar el resultado (1, X, 2)
         function getResult(goalsHome, goalsAway) {
             if (goalsHome > goalsAway) return '1';
             if (goalsHome < goalsAway) return '2';
             return 'X';
         }
 
-        // Función para analizar un marcador
         function parseScore(scoreStr) {
             if (!scoreStr) return null;
-            
             const parts = scoreStr.split('-');
             if (parts.length !== 2) return null;
-            
             const home = parseInt(parts[0].trim());
             const away = parseInt(parts[1].trim());
-            
             if (isNaN(home) || isNaN(away)) return null;
-            
             return { home, away };
         }
 
-        // Función para calcular los puntos de un partido
         function calculateMatchPoints(predictionStr, resultStr, odds1, oddsX, odds2) {
             const prediction = parseScore(predictionStr);
             const result = parseScore(resultStr);
             
-            if (!prediction || !result) return { type: "", points: 0 };
+            if (!prediction || !result) return { type: "", points: 0, exact: 0, sign: 0, fail: 1 };
             
-            // Comprobar acierto exacto
+            // Acierto exacto
             if (prediction.home === result.home && prediction.away === result.away) {
-                return { type: "Acierto Exacto", points: 12 };
+                return { type: "Acierto Exacto", points: 12, exact: 1, sign: 0, fail: 0 };
             }
             
-            // Comprobar acierto 1X2
+            // Acierto 1X2
             const predResult = getResult(prediction.home, prediction.away);
             const actualResult = getResult(result.home, result.away);
             
             if (predResult === actualResult) {
-                return { type: "Acierto 1X2", points: 8 };
+                return { type: "Acierto 1X2", points: 8, exact: 0, sign: 1, fail: 0 };
             }
             
-            // Fallo - aplicar penalización según la cuota seleccionada
+            // Fallo con penalización
             let selectedOdd;
             if (predResult === '1') selectedOdd = odds1;
             else if (predResult === 'X') selectedOdd = oddsX;
             else selectedOdd = odds2;
             
             const penalty = getPenalty(selectedOdd);
-            return { type: "Fallo", points: penalty };
+            return { type: "Fallo", points: penalty, exact: 0, sign: 0, fail: 1 };
         }
 
-        // Función para cargar los partidos en la tabla
+        // Función para cargar la interfaz
         function loadMatches() {
+            loadRealResultsTable();
+            loadPlayerPredictionsTable();
+            createPlayerSelectors();
+            calculateAllPoints();
+        }
+
+        // Función para cargar la tabla de resultados reales
+        function loadRealResultsTable() {
+            const tbody = document.getElementById("real-results-table");
+            tbody.innerHTML = "";
+            
+            let currentDate = "";
+            
+            matches.forEach((match, index) => {
+                if (match.date !== currentDate) {
+                    currentDate = match.date;
+                    const dateRow = document.createElement("tr");
+                    dateRow.innerHTML = `<td colspan="3" style="background-color: #2a5298; color: white; font-weight: bold;">${match.date}</td>`;
+                    tbody.appendChild(dateRow);
+                }
+                
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${match.time}</td>
+                    <td class="team-name">${match.home} vs ${match.away}</td>
+                    <td>
+                        <input type="text" id="real-input-${index}" placeholder="0-0" maxlength="5" 
+                               value="${realResults[index]}" data-match="${index}">
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Función para cargar la tabla de predicciones del jugador
+        function loadPlayerPredictionsTable() {
             const tbody = document.querySelector("#matches-table tbody");
             tbody.innerHTML = "";
             
             let currentDate = "";
             
             matches.forEach((match, index) => {
-                // Añadir fecha si cambia
                 if (match.date !== currentDate) {
                     currentDate = match.date;
                     const dateRow = document.createElement("tr");
-                    dateRow.innerHTML = `<td colspan="7" class="match-date">${match.date} - Fase de Liga</td>`;
+                    dateRow.innerHTML = `<td colspan="6" class="match-date">${match.date} - Fase de Liga</td>`;
                     tbody.appendChild(dateRow);
                 }
                 
-                // Crear fila del partido
                 const row = document.createElement("tr");
                 row.innerHTML = `
                     <td>${match.time}</td>
@@ -466,131 +665,312 @@
                         <span class="${match.odds2 < 2 ? 'low-odds' : ''}">${match.odds2}</span>
                     </td>
                     <td class="result-cell">
-                        <input type="text" id="pred-${index}" placeholder="0-0" maxlength="5">
-                    </td>
-                    <td class="result-cell">
-                        <input type="text" id="real-${index}" placeholder="0-0" maxlength="5">
+                        <input type="text" id="pred-${index}" placeholder="0-0" maxlength="5" 
+                               value="${allPlayersData[currentPlayer-1][index].pred}" data-match="${index}">
                     </td>
                     <td id="type-${index}" class="result-type"></td>
                     <td id="points-${index}" class="puntos"></td>
                 `;
-                
                 tbody.appendChild(row);
             });
-            
-            // Cargar datos guardados
-            loadSavedData();
         }
 
-        // Función para calcular todos los puntos
-        function calculateAllPoints() {
+        // Función para crear selectores de jugadores
+        function createPlayerSelectors() {
+            const selector = document.getElementById("player-selector");
+            selector.innerHTML = "";
+            
+            playerNames.forEach((name, index) => {
+                const button = document.createElement("button");
+                button.className = `player-btn ${index === currentPlayer-1 ? 'active' : ''}`;
+                button.textContent = name;
+                button.onclick = () => switchPlayer(index + 1);
+                selector.appendChild(button);
+            });
+        }
+
+        // Función para cambiar de jugador
+        function switchPlayer(playerNumber) {
+            saveCurrentPlayerData();
+            currentPlayer = playerNumber;
+            loadPlayerPredictionsTable();
+            updatePlayerInterface();
+            calculateCurrentPlayerPoints();
+        }
+
+        // Función para actualizar interfaz
+        function updatePlayerInterface() {
+            document.getElementById("current-player").textContent = playerNames[currentPlayer-1];
+            document.getElementById("player-points-name").textContent = playerNames[currentPlayer-1];
+            
+            document.querySelectorAll('.player-btn').forEach((btn, index) => {
+                btn.classList.toggle('active', index === currentPlayer-1);
+            });
+        }
+
+        // Función para guardar datos del jugador actual
+        function saveCurrentPlayerData() {
+            matches.forEach((match, index) => {
+                const predictionInput = document.getElementById(`pred-${index}`);
+                if (predictionInput) {
+                    allPlayersData[currentPlayer-1][index].pred = predictionInput.value;
+                }
+            });
+            saveLocalData();
+        }
+
+        // Función para guardar resultados reales
+        function saveRealResults() {
+            matches.forEach((match, index) => {
+                const realInput = document.getElementById(`real-input-${index}`);
+                if (realInput && realInput.value) {
+                    realResults[index] = realInput.value;
+                }
+            });
+            saveLocalData();
+        }
+
+        // Función para calcular puntos del jugador actual
+        function calculateCurrentPlayerPoints() {
             let totalPoints = 0;
             
             matches.forEach((match, index) => {
                 const predictionInput = document.getElementById(`pred-${index}`);
-                const resultInput = document.getElementById(`real-${index}`);
                 const typeCell = document.getElementById(`type-${index}`);
                 const pointsCell = document.getElementById(`points-${index}`);
                 
-                const prediction = predictionInput.value;
-                const result = resultInput.value;
+                const prediction = predictionInput ? predictionInput.value : "";
+                const result = realResults[index];
                 
                 const { type, points } = calculateMatchPoints(prediction, result, match.odds1, match.oddsX, match.odds2);
                 
-                // Actualizar celdas
-                typeCell.textContent = type;
-                pointsCell.textContent = points;
+                if (typeCell) typeCell.textContent = type;
+                if (pointsCell) pointsCell.textContent = points;
                 
-                // Aplicar estilos según el tipo de acierto
-                typeCell.className = "result-type";
-                pointsCell.className = "puntos";
+                // Aplicar estilos
+                if (typeCell) {
+                    typeCell.className = "result-type";
+                    if (type === "Acierto Exacto") typeCell.classList.add("acierto-exacto");
+                    else if (type === "Acierto 1X2") typeCell.classList.add("acierto-1x2");
+                    else if (type === "Fallo") typeCell.classList.add("fallo");
+                }
                 
-                if (type === "Acierto Exacto") {
-                    typeCell.classList.add("acierto-exacto");
-                    pointsCell.classList.add("acierto-exacto");
-                } else if (type === "Acierto 1X2") {
-                    typeCell.classList.add("acierto-1x2");
-                    pointsCell.classList.add("acierto-1x2");
-                } else if (type === "Fallo") {
-                    typeCell.classList.add("fallo");
-                    pointsCell.classList.add("fallo");
+                if (pointsCell) {
+                    pointsCell.className = "puntos";
+                    if (type === "Acierto Exacto") pointsCell.classList.add("acierto-exacto");
+                    else if (type === "Acierto 1X2") pointsCell.classList.add("acierto-1x2");
+                    else if (type === "Fallo") pointsCell.classList.add("fallo");
                 }
                 
                 totalPoints += points;
             });
             
-            // Actualizar total
             document.getElementById("points-value").textContent = totalPoints;
-            
-            // Guardar datos
-            saveData();
+            return totalPoints;
         }
 
-        // Función para guardar datos en localStorage
-        function saveData() {
-            const data = matches.map((match, index) => {
-                return {
-                    pred: document.getElementById(`pred-${index}`).value,
-                    real: document.getElementById(`real-${index}`).value
-                };
-            });
+        // Función para calcular todos los puntos
+        function calculateAllPoints() {
+            const ranking = [];
             
-            localStorage.setItem("championsPredictions", JSON.stringify(data));
-        }
-
-        // Función para cargar datos guardados
-        function loadSavedData() {
-            const savedData = localStorage.getItem("championsPredictions");
-            
-            if (savedData) {
-                const data = JSON.parse(savedData);
+            for (let player = 0; player < TOTAL_PLAYERS; player++) {
+                let totalPoints = 0;
+                let exactHits = 0;
+                let signHits = 0;
+                let fails = 0;
                 
-                data.forEach((item, index) => {
-                    const predInput = document.getElementById(`pred-${index}`);
-                    const realInput = document.getElementById(`real-${index}`);
+                matches.forEach((match, index) => {
+                    const prediction = allPlayersData[player][index].pred;
+                    const result = realResults[index];
                     
-                    if (predInput) predInput.value = item.pred || "";
-                    if (realInput) realInput.value = item.real || "";
+                    const { points, exact, sign, fail } = calculateMatchPoints(prediction, result, match.odds1, match.oddsX, match.odds2);
+                    
+                    totalPoints += points;
+                    exactHits += exact;
+                    signHits += sign;
+                    fails += fail;
                 });
+                
+                ranking.push({
+                    player: player + 1,
+                    name: playerNames[player],
+                    points: totalPoints,
+                    exact: exactHits,
+                    sign: signHits,
+                    fails: fails
+                });
+            }
+            
+            // Ordenar ranking
+            ranking.sort((a, b) => b.points - a.points);
+            
+            // Actualizar interfaces
+            updateRanking(ranking);
+            updateSummaryGrid(ranking);
+            calculateCurrentPlayerPoints();
+            
+            return ranking;
+        }
+
+        // Función para actualizar el resumen de puntos
+        function updateSummaryGrid(ranking) {
+            const grid = document.getElementById("summary-grid");
+            grid.innerHTML = "";
+            
+            ranking.forEach((player, index) => {
+                const card = document.createElement("div");
+                card.className = "summary-card";
+                card.innerHTML = `
+                    <h4>${index + 1}º - ${player.name}</h4>
+                    <div class="summary-points">${player.points} pts</div>
+                    <div style="font-size: 0.8em; color: #666; margin-top: 5px;">
+                        ${player.exact} exactos • ${player.sign} 1X2
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Función para actualizar el ranking detallado
+        function updateRanking(ranking) {
+            const tbody = document.getElementById("ranking-body");
+            tbody.innerHTML = "";
+            
+            ranking.forEach((player, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}º</td>
+                    <td><strong>${player.name}</strong></td>
+                    <td><strong>${player.points}</strong></td>
+                    <td>${player.exact}</td>
+                    <td>${player.sign}</td>
+                    <td>${player.fails}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Funciones de exportación/importación
+        function exportAllData() {
+            const data = {
+                playerNames: playerNames,
+                realResults: realResults,
+                predictions: allPlayersData.map(playerData => 
+                    playerData.map(match => match.pred)
+                ),
+                currentPlayer: currentPlayer
+            };
+            
+            const dataString = JSON.stringify(data, null, 2);
+            document.getElementById("data-textarea").value = dataString;
+            return dataString;
+        }
+
+        function importAllData() {
+            const dataString = document.getElementById("data-textarea").value.trim();
+            
+            if (!dataString) {
+                alert("Por favor, pega los datos exportados en el cuadro de texto.");
+                return;
+            }
+            
+            try {
+                const data = JSON.parse(dataString);
+                
+                if (data.realResults) realResults = data.realResults;
+                if (data.predictions) {
+                    data.predictions.forEach((playerPredictions, playerIndex) => {
+                        playerPredictions.forEach((prediction, matchIndex) => {
+                            if (playerIndex < TOTAL_PLAYERS && matchIndex < matches.length) {
+                                allPlayersData[playerIndex][matchIndex].pred = prediction || "";
+                            }
+                        });
+                    });
+                }
+                if (data.currentPlayer) currentPlayer = data.currentPlayer;
+                
+                // Actualizar interfaces
+                loadRealResultsTable();
+                createPlayerSelectors();
+                updatePlayerInterface();
+                loadPlayerPredictionsTable();
+                calculateAllPoints();
+                
+                alert("Datos importados correctamente!");
+                
+            } catch (e) {
+                alert("Error al importar datos: " + e.message);
             }
         }
 
-        // Función para limpiar todos los datos
-        function clearAllData() {
-            if (confirm("¿Estás seguro de que quieres limpiar todas las predicciones y resultados?")) {
+        // Funciones de almacenamiento local
+        function saveLocalData() {
+            const data = {
+                playerNames: playerNames,
+                realResults: realResults,
+                allPlayersData: allPlayersData,
+                currentPlayer: currentPlayer
+            };
+            localStorage.setItem("championsPredictionsMulti", JSON.stringify(data));
+        }
+
+        function loadLocalData() {
+            const savedData = localStorage.getItem("championsPredictionsMulti");
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    if (data.realResults) realResults = data.realResults;
+                    if (data.allPlayersData) allPlayersData = data.allPlayersData;
+                    if (data.currentPlayer) currentPlayer = data.currentPlayer;
+                } catch (e) {
+                    console.error("Error loading data:", e);
+                }
+            }
+        }
+
+        function clearCurrentPlayer() {
+            if (confirm(`¿Estás seguro de que quieres limpiar todas las predicciones de ${playerNames[currentPlayer-1]}?`)) {
                 matches.forEach((match, index) => {
-                    const predInput = document.getElementById(`pred-${index}`);
-                    const realInput = document.getElementById(`real-${index}`);
-                    const typeCell = document.getElementById(`type-${index}`);
-                    const pointsCell = document.getElementById(`points-${index}`);
-                    
-                    if (predInput) predInput.value = "";
-                    if (realInput) realInput.value = "";
-                    if (typeCell) typeCell.textContent = "";
-                    if (pointsCell) pointsCell.textContent = "";
-                    
-                    typeCell.className = "result-type";
-                    pointsCell.className = "puntos";
+                    allPlayersData[currentPlayer-1][index].pred = "";
                 });
-                
-                document.getElementById("points-value").textContent = "0";
-                
-                localStorage.removeItem("championsPredictions");
+                loadPlayerPredictionsTable();
+                calculateAllPoints();
+            }
+        }
+
+        function copyToClipboard() {
+            const textarea = document.getElementById("data-textarea");
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                alert("Datos copiados al portapapeles");
+            } catch (err) {
+                console.error('Error al copiar: ', err);
             }
         }
 
         // Inicializar la página
         document.addEventListener("DOMContentLoaded", function() {
+            loadLocalData();
             loadMatches();
             
-            // Asignar eventos a los botones
+            // Asignar eventos
             document.getElementById("calculate-btn").addEventListener("click", calculateAllPoints);
-            document.getElementById("clear-btn").addEventListener("click", clearAllData);
-            document.getElementById("save-btn").addEventListener("click", saveData);
+            document.getElementById("clear-btn").addEventListener("click", clearCurrentPlayer);
+            document.getElementById("export-btn").addEventListener("click", exportAllData);
+            document.getElementById("import-btn").addEventListener("click", importAllData);
+            document.getElementById("copy-data-btn").addEventListener("click", copyToClipboard);
             
-            // Guardar automáticamente cuando se modifiquen los inputs
-            document.querySelectorAll("input").forEach(input => {
-                input.addEventListener("input", saveData);
+            // Guardar automáticamente
+            document.addEventListener("input", function(e) {
+                if (e.target.matches('input[data-match]')) {
+                    if (e.target.id.startsWith('real-input-')) {
+                        saveRealResults();
+                    } else {
+                        saveCurrentPlayerData();
+                    }
+                    calculateAllPoints();
+                }
             });
         });
     </script>
